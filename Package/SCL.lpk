@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="SCL"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\Source\Number;..\Source\String;..\Source\SharedLibrary\Windows;..\Source\Exception;..\Source\Memory;..\Source\File;..\Source\Program;..\Source\DataStructure\Array;..\Source\DataStructure\List;..\Source\Console;..\Source\Thread;..\Source\System;..\Source\Tick;..\Source\Byte;..\Source\SharedLibrary\SQLite3;..\Source\SharedLibrary\Zstandard;..\Source\SharedLibrary\Posix;..\Source\Segment"/>
+        <UnitOutputDirectory Value="Output\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <CodeGeneration>
+        <Optimizations>
+          <OptimizationLevel Value="3"/>
+        </Optimizations>
+      </CodeGeneration>
+    </CompilerOptions>
+    <Files>
+      <Item>
+        <Filename Value="SCL.inc"/>
+        <Type Value="Include"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Number\UNumber.pas"/>
+        <UnitName Value="UNumber"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UString.pas"/>
+        <UnitName Value="UString"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Windows\UWindows.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="UWindows"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Windows\UWindowsHelp.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="UWindowsHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Windows\UWindowsLibC.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="UWindowsLibC"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Posix\UPosix.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="UPosix"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Exception\UException.pas"/>
+        <UnitName Value="UException"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Exception\UExceptionHelp.pas"/>
+        <UnitName Value="UExceptionHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Number\UNumberHelp.pas"/>
+        <UnitName Value="UNumberHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Memory\UMemory.pas"/>
+        <UnitName Value="UMemory"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\DataStructure\Array\UArray.pas"/>
+        <UnitName Value="UArray"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\DataStructure\Array\UArrayHelp.pas"/>
+        <UnitName Value="UArrayHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\DataStructure\List\UList.pas"/>
+        <UnitName Value="UList"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\DataStructure\List\UListHelp.pas"/>
+        <UnitName Value="UListHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFile.pas"/>
+        <UnitName Value="UFile"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileHelp.pas"/>
+        <UnitName Value="UFileHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Segment\USegment.pas"/>
+        <UnitName Value="USegment"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Segment\USegmentHelp.pas"/>
+        <UnitName Value="USegmentHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringHelp.pas"/>
+        <UnitName Value="UStringHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringHandle.pas"/>
+        <UnitName Value="UStringHandle"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringHandleHelp.pas"/>
+        <UnitName Value="UStringHandleHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringCount.pas"/>
+        <UnitName Value="UStringCount"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringSplit.pas"/>
+        <UnitName Value="UStringSplit"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringSplitHelp.pas"/>
+        <UnitName Value="UStringSplitHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringCompare.pas"/>
+        <UnitName Value="UStringCompare"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringCheck.pas"/>
+        <UnitName Value="UStringCheck"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\String\UStringCase.pas"/>
+        <UnitName Value="UStringCase"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFilePathHelp.pas"/>
+        <UnitName Value="UFilePathHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Program\UProgram.pas"/>
+        <UnitName Value="UProgram"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Program\UProgramCommandLine.pas"/>
+        <UnitName Value="UProgramCommandLine"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Console\UConsole.pas"/>
+        <UnitName Value="UConsole"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Thread\UThread.pas"/>
+        <UnitName Value="UThread"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Thread\UThreadGroup.pas"/>
+        <UnitName Value="UThreadGroup"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Thread\UThreadHelp.pas"/>
+        <UnitName Value="UThreadHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\System\USystem.pas"/>
+        <UnitName Value="USystem"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\System\USystemCPU.pas"/>
+        <UnitName Value="USystemCPU"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\System\USystemHelp.pas"/>
+        <UnitName Value="USystemHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Tick\UTick.pas"/>
+        <UnitName Value="UTick"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Tick\UTickHelp.pas"/>
+        <UnitName Value="UTickHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Memory\UMemoryBlock.pas"/>
+        <UnitName Value="UMemoryBlock"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileMemoryHandler.pas"/>
+        <UnitName Value="UFileMemoryHandler"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileCompare.pas"/>
+        <UnitName Value="UFileCompare"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileHandleHelp.pas"/>
+        <UnitName Value="UFileHandleHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Memory\UMemorySwap.pas"/>
+        <UnitName Value="UMemorySwap"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Memory\UMemoryHelp.pas"/>
+        <UnitName Value="UMemoryHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\DataStructure\Array\UArraySort.pas"/>
+        <UnitName Value="UArraySort"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Byte\UByteUnit.pas"/>
+        <UnitName Value="UByteUnit"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Byte\UByteUnitHelp.pas"/>
+        <UnitName Value="UByteUnitHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\Memory\UMemoryCompare.pas"/>
+        <UnitName Value="UMemoryCompare"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileMemoryHandlerHelp.pas"/>
+        <UnitName Value="UFileMemoryHandlerHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\SQLite3\USQLite3.pas"/>
+        <UnitName Value="USQLite3"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\SQLite3\USQLite3Help.pas"/>
+        <UnitName Value="USQLite3Help"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\SQLite3\USQLite3LibraryStatic.pas"/>
+        <UnitName Value="USQLite3LibraryStatic"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Zstandard\UZstandard.pas"/>
+        <UnitName Value="UZstandard"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Zstandard\UZstandardHelp.pas"/>
+        <UnitName Value="UZstandardHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\Zstandard\UZstandardLibraryStatic.pas"/>
+        <UnitName Value="UZstandardLibraryStatic"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\File\UFileEnumerateHelp.pas"/>
+        <UnitName Value="UFileEnumerateHelp"/>
+      </Item>
+    </Files>
+    <RequiredPkgs>
+      <Item>
+        <PackageName Value="FCL"/>
+      </Item>
+    </RequiredPkgs>
+    <UsageOptions>
+      <IncludePath Value="$(PkgDir)"/>
+      <LibraryPath Value="$(PkgDir)\..\..\Libraries\Kernel32\$(TargetCPU)-$(TargetOS);$(PkgDir)\..\..\Libraries\ZStandard\$(TargetCPU)-$(TargetOS)"/>
+      <ObjectPath Value="$(PkgDir)\..\..\Libraries\SQLite3\$(TargetCPU)-$(TargetOS)"/>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
