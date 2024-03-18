@@ -36,10 +36,9 @@ begin
   Result := AFile.Path;
 end;
 
-//ofoCreate: Create if it does not exist
-//ofoOverwrite: Used with ofoCreate and creates the file if it exists or not
-//Todo: Handle ofoShareRead, ofoShareWrite and ofoShareDelete
 function Open(const AFile: TFile; AOptions: TOpenFileOptions; out AHandler: TFileHandler): Bool;
+const
+  CreateOptions = [ofoCreate, ofoOverwrite, ofoOpen];
 var
   flags, H: cint;
   NR, NW: Bool;
@@ -53,12 +52,14 @@ begin
   else
     flags := O_WRONLY;
 
-  if ofoCreate in AOptions then
-  begin
-    flags := flags or O_CREAT;
-    if ofoOverwrite in AOptions then
-      flags := flags or O_TRUNC;
-  end;
+  if CreateOptions * AOptions = [ofoCreate] then
+    flags := flags or O_CREAT or O_Excl
+  else if CreateOptions * AOptions = [ofoCreate, ofoOverwrite] then
+     flags := flags or O_CREAT or O_TRUNC
+  else if CreateOptions * AOptions = [ofoCreate, ofoOpen] then
+    flags := flags or O_CREAT
+  else if CreateOptions * AOptions = [ofoOverwrite] then
+    flags := flags or O_TRUNC;
 
   H := FpOpen(AFile.Path, flags);
   Result := H > 0;

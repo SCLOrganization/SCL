@@ -2,13 +2,13 @@ uses
   BaseUnix, Unix, errors;
 
 const
-  ErrorCodes: array[TSystemErrorKind] of TSystemErrorCode = (
-    -1,
-    0,
-    ESysENOENT,
-    ESysENOENT, //Same as sekPathNotFound
-    ESysEEXIST,
-    ESysENOSPC);
+  ErrorCodes: array[TSystemErrorKind] of array of TSystemErrorCode = (
+    [-1],
+    [0],
+    [ESysENOENT],
+    [ESysEEXIST],
+    [ESysENOSPC],
+    [ESysENAMETOOLONG]);
 
 //System sleep in MS
 function Sleep(const ADuration: UPS): Bool;

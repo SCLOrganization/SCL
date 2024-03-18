@@ -36,9 +36,9 @@ function Prepare(AConnection: Psqlite3; const ASQLStatement: TSQLite3SQLStatemen
 function Finalize(var AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
 function Finalize(var AStatement: Psqlite3_stmt): Bool; inline; overload;
 
-function Step(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
 function Step(AStatement: Psqlite3_stmt; AExpectedResultCode: TSQLite3ResultCode;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
+function Step(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
 
 function Reset(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
 function Reset(AStatement: Psqlite3_stmt): Bool; inline; overload;
@@ -48,18 +48,18 @@ function StepResetInsert(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3Res
 
 function Bind<T>(AStatement: Psqlite3_stmt; AIndex: Ind; constref AValue: T;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
-function Bind<T1>(AStatement: Psqlite3_stmt; constref V1: T1; out AResultCode: TSQLite3ResultCode): Bool;
+function BindAll<T1>(AStatement: Psqlite3_stmt; constref V1: T1; out AResultCode: TSQLite3ResultCode): Bool;
   inline; overload;
-function Bind<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
-function Bind<T1, T2, T3>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3;
+function BindAll<T1, T2, T3>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
-function Bind<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   constref V3: T3; constref V4: T4; out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
-function Bind<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt;
+function BindAll<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt;
   constref V1: T1; constref V2: T2; constref V3: T3; constref V4: T4; constref V5: T5;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
-function Bind<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt;
+function BindAll<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt;
   constref V1: T1; constref V2: T2; constref V3: T3; constref V4: T4; constref V5: T5; constref V6: T6;
   out AResultCode: TSQLite3ResultCode): Bool; inline; overload;
 
@@ -74,15 +74,15 @@ function ColumnRStr(AStatement: Psqlite3_stmt; AIndex: Ind): RStr;
 procedure ColumnBlob(AStatement: Psqlite3_stmt; AIndex: Ind; out AValue: Ptr; out ASize: Siz); inline; overload;
 procedure ColumnBlob(AStatement: Psqlite3_stmt; AIndex: Ind; out AMemoryBlock: TMemoryBlock); inline; overload;
 
-function Column<T1>(AStatement: Psqlite3_stmt; out V1: T1): Bool; inline; overload;
-function Column<T1, T2>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2): Bool; inline; overload;
-function Column<T1, T2, T3>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3): Bool; inline; overload;
-function Column<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4): Bool;
-  inline; overload;
-function Column<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3;
-  out V4: T4; out V5: T5): Bool; inline; overload;
-function Column<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3;
-  out V4: T4; out V5: T5; out V6: T6): Bool; inline; overload;
+function ColumnAll<T1>(AStatement: Psqlite3_stmt; out V1: T1): Bool; overload;
+function ColumnAll<T1, T2>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2): Bool; overload;
+function ColumnAll<T1, T2, T3>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3): Bool; overload;
+function ColumnAll<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4): Bool;
+  overload;
+function ColumnAll<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3;
+  out V4: T4; out V5: T5): Bool; overload;
+function ColumnAll<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3;
+  out V4: T4; out V5: T5; out V6: T6): Bool; overload;
 
 function Execute(AConnection: Psqlite3; const ASQLStatement: TSQLite3SQLStatement): TSQLite3ResultCode; overload;
 function Execute(AConnection: Psqlite3; const ASQLStatement: TSQLite3SQLStatement;
@@ -246,17 +246,16 @@ begin
   Result := Finalize(AStatement, R);
 end;
 
-function Step(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool;
-begin
-  AResultCode := sqlite3_step(AStatement);
-  Result := True;
-end;
-
 function Step(AStatement: Psqlite3_stmt; AExpectedResultCode: TSQLite3ResultCode;
   out AResultCode: TSQLite3ResultCode): Bool;
 begin
   AResultCode := sqlite3_step(AStatement);
   Result := AResultCode = AExpectedResultCode;
+end;
+
+function Step(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool;
+begin
+  Result := Step(AStatement, SQLITE_ROW, AResultCode);
 end;
 
 function Reset(AStatement: Psqlite3_stmt; out AResultCode: TSQLite3ResultCode): Bool;
@@ -299,43 +298,43 @@ begin
   Result := AResultCode = SQLITE_OK;
 end;
 
-function Bind<T1>(AStatement: Psqlite3_stmt; constref V1: T1; out AResultCode: TSQLite3ResultCode): Bool;
+function BindAll<T1>(AStatement: Psqlite3_stmt; constref V1: T1; out AResultCode: TSQLite3ResultCode): Bool;
 begin
   Result := Bind<T1>(AStatement, 0, V1, AResultCode);
 end;
 
-function Bind<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1>(AStatement, V1, AResultCode);
+  Result := BindAll<T1>(AStatement, V1, AResultCode);
   Result := Result and (Bind<T2>(AStatement, 1, V2, AResultCode));
 end;
 
-function Bind<T1, T2, T3>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3;
+function BindAll<T1, T2, T3>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3;
   out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2>(AStatement, V1, V2, AResultCode);
+  Result := BindAll<T1, T2>(AStatement, V1, V2, AResultCode);
   Result := Result and (Bind<T3>(AStatement, 2, V3, AResultCode));
 end;
 
-function Bind<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   constref V3: T3; constref V4: T4; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3>(AStatement, V1, V2, V3, AResultCode);
+  Result := BindAll<T1, T2, T3>(AStatement, V1, V2, V3, AResultCode);
   Result := Result and (Bind<T4>(AStatement, 3, V4, AResultCode));
 end;
 
-function Bind<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   constref V3: T3; constref V4: T4; constref V5: T5; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3, T4>(AStatement, V1, V2, V3, V4, AResultCode);
+  Result := BindAll<T1, T2, T3, T4>(AStatement, V1, V2, V3, V4, AResultCode);
   Result := Result and (Bind<T5>(AStatement, 4, V5, AResultCode));
 end;
 
-function Bind<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+function BindAll<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
   constref V3: T3; constref V4: T4; constref V5: T5; constref V6: T6; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3, T4, T5>(AStatement, V1, V2, V3, V4, V5, AResultCode);
+  Result := BindAll<T1, T2, T3, T4, T5>(AStatement, V1, V2, V3, V4, V5, AResultCode);
   Result := Result and (Bind<T6>(AStatement, 5, V6, AResultCode));
 end;
 
@@ -408,50 +407,40 @@ begin
   Size(AMemoryBlock, sqlite3_column_bytes(AStatement, AIndex));
 end;
 
-function Column<T1>(AStatement: Psqlite3_stmt; out V1: T1): Bool;
+function ColumnAll<T1>(AStatement: Psqlite3_stmt; out V1: T1): Bool;
 begin
   Result := Column<T1>(AStatement, 0, V1);
 end;
 
-function Column<T1, T2>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2): Bool;
+function ColumnAll<T1, T2>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2): Bool;
 begin
-  Result := Column<T1>(AStatement, 0, V1);
+  Result := ColumnAll<T1>(AStatement, V1);
   Result := Result and (Column<T2>(AStatement, 1, V2));
 end;
 
-function Column<T1, T2, T3>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3): Bool;
+function ColumnAll<T1, T2, T3>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3): Bool;
 begin
-  Result := Column<T1>(AStatement, 0, V1);
-  Result := Result and (Column<T2>(AStatement, 1, V2));
+  Result := ColumnAll<T1, T2>(AStatement, V1, V2);
   Result := Result and (Column<T3>(AStatement, 2, V3));
 end;
 
-function Column<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4): Bool;
+function ColumnAll<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4): Bool;
 begin
-  Result := Column<T1>(AStatement, 0, V1);
-  Result := Result and (Column<T2>(AStatement, 1, V2));
-  Result := Result and (Column<T3>(AStatement, 2, V3));
+  Result := ColumnAll<T1, T2, T3>(AStatement, V1, V2, V3);
   Result := Result and (Column<T4>(AStatement, 3, V4));
 end;
 
-function Column<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4; out V5: T5
+function ColumnAll<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4; out V5: T5
   ): Bool;
 begin
-  Result := Column<T1>(AStatement, 0, V1);
-  Result := Result and (Column<T2>(AStatement, 1, V2));
-  Result := Result and (Column<T3>(AStatement, 2, V3));
-  Result := Result and (Column<T4>(AStatement, 3, V4));
+  Result := ColumnAll<T1, T2, T3, T4>(AStatement, V1, V2, V3, V4);
   Result := Result and (Column<T5>(AStatement, 4, V5));
 end;
 
-function Column<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4; out
+function ColumnAll<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; out V1: T1; out V2: T2; out V3: T3; out V4: T4; out
   V5: T5; out V6: T6): Bool;
 begin
-  Result := Column<T1>(AStatement, 0, V1);
-  Result := Result and (Column<T2>(AStatement, 1, V2));
-  Result := Result and (Column<T3>(AStatement, 2, V3));
-  Result := Result and (Column<T4>(AStatement, 3, V4));
-  Result := Result and (Column<T5>(AStatement, 4, V5));
+  Result := ColumnAll<T1, T2, T3, T4, T5>(AStatement, V1, V2, V3, V4, V5);
   Result := Result and (Column<T6>(AStatement, 5, V6));
 end;
 
@@ -483,8 +472,11 @@ begin
   try
     Result := True;
     for I := 0 to High(ASQLStatements) do
-      if Result then
-        Result := Execute(AConnection, ASQLStatements[I], AResultCode);
+    begin
+      Result := Execute(AConnection, ASQLStatements[I], AResultCode);
+      if not Result then
+        Break;
+    end;
   finally
     if AUseTransaction then
     begin
@@ -539,42 +531,42 @@ end;
 
 function Insert<T1>(AStatement: Psqlite3_stmt; constref V1: T1; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1>(AStatement, V1, AResultCode);
+  Result := BindAll<T1>(AStatement, V1, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 
-function Insert<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; out AResultCode: TSQLite3ResultCode
-  ): Bool;
+function Insert<T1, T2>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2;
+  out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2>(AStatement, V1, V2, AResultCode);
+  Result := BindAll<T1, T2>(AStatement, V1, V2, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 
 function Insert<T1, T2, T3>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3; out
   AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3>(AStatement, V1, V2, V3, AResultCode);
+  Result := BindAll<T1, T2, T3>(AStatement, V1, V2, V3, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 
 function Insert<T1, T2, T3, T4>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3; constref
   V4: T4; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3, T4>(AStatement, V1, V2, V3, V4, AResultCode);
+  Result := BindAll<T1, T2, T3, T4>(AStatement, V1, V2, V3, V4, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 
 function Insert<T1, T2, T3, T4, T5>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3; constref
   V4: T4; constref V5: T5; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3, T4, T5>(AStatement, V1, V2, V3, V4, V5, AResultCode);
+  Result := BindAll<T1, T2, T3, T4, T5>(AStatement, V1, V2, V3, V4, V5, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 
 function Insert<T1, T2, T3, T4, T5, T6>(AStatement: Psqlite3_stmt; constref V1: T1; constref V2: T2; constref V3: T3;
   constref V4: T4; constref V5: T5; constref V6: T6; out AResultCode: TSQLite3ResultCode): Bool;
 begin
-  Result := Bind<T1, T2, T3, T4, T5, T6>(AStatement, V1, V2, V3, V4, V5, V6, AResultCode);
+  Result := BindAll<T1, T2, T3, T4, T5, T6>(AStatement, V1, V2, V3, V4, V5, V6, AResultCode);
   Result := Result and StepResetInsert(AStatement, AResultCode);
 end;
 

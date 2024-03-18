@@ -122,6 +122,7 @@ begin
   Result := AList.Options;
 end;
 
+//Todo: Improved error handling on no memory
 procedure Capacity<T>(var AList: TList<T>; const ACapacity: Siz);
 begin
   with AList do
@@ -140,10 +141,10 @@ end;
 function Capacity<T>(const AList: TList<T>): Siz;
 begin
   with AList do
-    if Data = nil then
-      Result := 0
+    if Data <> nil then
+      Result := Length(Data^)
     else
-      Result := Length(Data^);
+      Result := 0;
 end;
 
 procedure Count<T>(var AList: TList<T>; const ACount: Siz);
@@ -263,8 +264,13 @@ end;
 
 //Compiler issue: Can not Inline
 function Add<T>(var AList: TList<T>; const AItem: T): Ind;
+var
+  I: Ind;
 begin
-  Result := Insert<T>(AList, Count<T>(AList), AItem);
+  I := Count<T>(AList);
+  Count<T>(AList, I + 1);
+  Item<T>(AList, I, AItem);
+  Result := I;
 end;
 
 //Compiler issue: Does not allow explicit specialization

@@ -262,8 +262,6 @@
     </RequiredPkgs>
     <UsageOptions>
       <IncludePath Value="$(PkgDir)"/>
-      <LibraryPath Value="$(PkgDir)\..\..\Libraries\Kernel32\$(TargetCPU)-$(TargetOS);$(PkgDir)\..\..\Libraries\ZStandard\$(TargetCPU)-$(TargetOS)"/>
-      <ObjectPath Value="$(PkgDir)\..\..\Libraries\SQLite3\$(TargetCPU)-$(TargetOS)"/>
       <UnitPath Value="$(PkgOutDir)"/>
     </UsageOptions>
     <PublishOptions>

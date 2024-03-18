@@ -51,15 +51,27 @@ function ToStr(const AValue: F64): Str; inline; overload;
 function ToStr<T>(const AValue: T): Str; inline; overload;
 function AsStr<T>(const AValue: T): Str; inline; overload;
 
+function ToI64(const AStr: Str; out AI64: I64): Bool; inline; overload;
+function ToU64(const AStr: Str; out AU64: U64): Bool; inline; overload;
+
 procedure Replace(var AValue: RStr; AFrom, ATo: Char); inline; overload;
 function Replaced(const AValue: RStr; AFrom, ATo: Char): RStr; inline; overload;
 
-function Join(const AValue: TStrArray; const ASeparator: Char): Str; overload;
+function Join<T>(const AValue: array of T; const AStart, AStarter, ASeparator, AFinisher, AFinish: Str): Str; overload;
+function Join<T>(const AValue: array of T; const ASeparator: Str): Str; overload;
+
+function StringOfChar(AValue: Char; ACount: Siz): Str; overload;
+
+type
+  TPadAlignment = (paLeft, paRight);
+
+procedure Pad(var AValue: Str; ACount: Siz; AAlignment: TPadAlignment); inline; overload;
+function Padded(const AValue: Str; ACount: Siz; AAlignment: TPadAlignment): Str; inline; overload;
 
 implementation
 
 uses
-  UStringHandle;
+  UStringHandle, UMemory;
 
 function Kind<T>: TKind;
 begin
@@ -176,6 +188,24 @@ begin
     end;
 end;
 
+//Todo: Improve
+function ToI64(const AStr: Str; out AI64: I64): Bool;
+var
+  Code: I32;
+begin
+  System.Val(AStr, AI64, Code);
+  Result := Code = 0;
+end;
+
+//Todo: Improve
+function ToU64(const AStr: Str; out AU64: U64): Bool;
+var
+  Code: I32;
+begin
+  System.Val(AStr, AU64, Code);
+  Result := Code = 0;
+end;
+
 procedure Replace(var AValue: RStr; AFrom, ATo: Char);
 var
   P: PChar;
@@ -198,17 +228,45 @@ begin
 end;
 
 //Todo: Improve performance
-function Join(const AValue: TStrArray; const ASeparator: Char): Str;
+function Join<T>(const AValue: array of T; const AStart, AStarter, ASeparator, AFinisher, AFinish: Str): Str;
 var
   I: Ind;
 begin
-  Result := '';
+  Result := AStart;
   for I := Low(AValue) to High(AValue) do
   begin
-    Result += AValue[I];
+    Result += AStarter + (AsStr<T>(AValue[I])) + AFinisher;
     if I <> High(AValue) then
       Result += ASeparator;
   end;
+  Result += AFinish;
+end;
+
+function Join<T>(const AValue: array of T; const ASeparator: Str): Str;
+begin
+  Result := Join<T>(AValue, '', '', ASeparator, '', '');
+end;
+
+//Todo: Improve
+function StringOfChar(AValue: Char; ACount: Siz): Str;
+begin
+  SetLength(Result, ACount);
+  Fill(PU8(Result), ACount, U8(AValue));
+end;
+
+procedure Pad(var AValue: Str; ACount: Siz; AAlignment: TPadAlignment);
+begin
+  if Length(AValue) < ACount then
+    case AAlignment of
+      paLeft: AValue := StringOfChar(' ', ACount - Length(AValue)) + AValue;
+      paRight: AValue := AValue + StringOfChar(' ', ACount - Length(AValue));
+    end;
+end;
+
+function Padded(const AValue: Str; ACount: Siz; AAlignment: TPadAlignment): Str;
+begin
+  Result := AValue;
+  Pad(Result, ACount, AAlignment);
 end;
 
 end.

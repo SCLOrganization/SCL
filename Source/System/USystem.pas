@@ -11,13 +11,12 @@ function Sleep(const ADuration: UPS): Bool; inline;
 
 type
   TSystemErrorCode = IPS;
-  TSystemErrorKind = (sekUnknown, sekNone, sekPathNotFound, sekFileNotFound, sekAlreadyExists, sekDiskIsFull);
+  TSystemErrorKind = (sekUnknown, sekNone, sekDoesNotExists, sekAlreadyExists, sekDiskIsFull, sekInvalidFileSystemName);
 
 function LastSystemError: TSystemErrorKind; inline; overload;
 function LastSystemErrorCode: TSystemErrorCode;
 function LastSystemErrorMessage: Str;
 function Kind(ACode: TSystemErrorCode): TSystemErrorKind; inline; overload;
-function Code(AKind: TSystemErrorKind): TSystemErrorCode; inline; overload;
 
 implementation
 
@@ -31,16 +30,13 @@ implementation
 function Kind(ACode: TSystemErrorCode): TSystemErrorKind;
 var
   F: TSystemErrorKind;
+  I: Ind;
 begin
   for F := Succ(Low(TSystemErrorKind)) to High(TSystemErrorKind) do
-    if ErrorCodes[F] = ACode then
-      Exit(F);
+    for I := 0 to High(ErrorCodes[F]) do
+      if ErrorCodes[F][I] = ACode then
+        Exit(F);
   Result := sekUnknown;
-end;
-
-function Code(AKind: TSystemErrorKind): TSystemErrorCode;
-begin
-  Result := ErrorCodes[AKind];
 end;
 
 function LastSystemError: TSystemErrorKind;

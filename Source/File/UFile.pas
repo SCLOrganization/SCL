@@ -86,7 +86,7 @@ procedure Path(var AFile: TFile; const APath: TFilePath); inline; overload;
 function Path(const AFile: TFile): TFilePath; inline; overload;
 
 type
-  TOpenFileOption = (ofoCreate, ofoOverwrite,
+  TOpenFileOption = (ofoCreate, ofoOverwrite, ofoOpen,
     ofoRead, ofoWrite,
     ofoShareRead, ofoShareWrite, ofoShareDelete,
     ofoReadAttributes, ofoWriteAttributes);

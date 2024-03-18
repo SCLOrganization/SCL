@@ -184,7 +184,7 @@ begin
     end
     else
       I += 1;
-  Result := Join(A, PathDelimiter);
+  Result := Join<Str>(A, PathDelimiter);
 end;
 
 procedure Adjust(var APath: TFileSystemPath);

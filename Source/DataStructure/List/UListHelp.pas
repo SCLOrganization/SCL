@@ -13,6 +13,7 @@ function AddEmptyPointer<T>(var AList: TList<T>): Ptr; overload;
 
 implementation
 
+//Todo: Improved error handling on no memory
 function AddEmpty<T>(var AList: TList<T>): Ind;
 begin
   Result := Count<T>(AList);

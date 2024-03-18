@@ -46,10 +46,14 @@ procedure Destroy(var ACriticalSection: TCriticalSection); overload;
 function InterlockedIncrement(var AValue: IPS): IPS; inline; overload;
 function InterlockedDecrement(var AValue: IPS): IPS; inline; overload;
 function InterlockedAdd(var AValue: IPS; AAddend: IPS): IPS; inline; overload;
+function InterlockedExchange(var AValue: IPS; ANew: IPS): IPS; inline; overload;
+function InterlockedCompareExchange(var AValue: IPS; ANew, AComperand: IPS): IPS; inline; overload;
 
 function InterlockedIncrement(var AValue: UPS): UPS; inline; overload;
 function InterlockedDecrement(var AValue: UPS): UPS; inline; overload;
 function InterlockedAdd(var AValue: UPS; AAddend: UPS): UPS; inline; overload;
+function InterlockedExchange(var AValue: UPS; ANew: UPS): UPS; inline; overload;
+function InterlockedCompareExchange(var AValue: UPS; ANew, AComperand: UPS): UPS; inline; overload;
 
 implementation
 
@@ -162,9 +166,22 @@ begin
   Result := System.InterlockedDecrement64(AValue);
 end;
 
+//Adds AAddend to AValue and returns the old AValue
 function InterlockedAdd(var AValue: IPS; AAddend: IPS): IPS;
 begin
   Result := System.InterlockedExchangeAdd64(AValue, AAddend);
+end;
+
+//Stores ANew in AValue and returns the old AValue
+function InterlockedExchange(var AValue: IPS; ANew: IPS): IPS;
+begin
+  Result := System.InterlockedExchange64(AValue, ANew);
+end;
+
+//If AValue and AComperand are equal, stores ANew in AValue and returns the old AValue
+function InterlockedCompareExchange(var AValue: IPS; ANew, AComperand: IPS): IPS;
+begin
+  Result := System.InterlockedCompareExchange64(AValue, ANew, AComperand);
 end;
 
 function InterlockedIncrement(var AValue: UPS): UPS;
@@ -177,9 +194,21 @@ begin
   Result := System.InterlockedDecrement64(AValue);
 end;
 
+//Adds AAddend to AValue and returns the old AValue
 function InterlockedAdd(var AValue: UPS; AAddend: UPS): UPS;
 begin
   Result := System.InterlockedExchangeAdd64(AValue, AAddend);
+end;
+
+function InterlockedExchange(var AValue: UPS; ANew: UPS): UPS;
+begin
+  Result := System.InterlockedExchange64(AValue, ANew);
+end;
+
+//If AValue and AComperand are equal, stores ANew in AValue and returns the old AValue
+function InterlockedCompareExchange(var AValue: UPS; ANew, AComperand: UPS): UPS;
+begin
+  Result := System.InterlockedCompareExchange64(AValue, ANew, AComperand);
 end;
 
 end.

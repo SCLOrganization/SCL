@@ -58,8 +58,8 @@ end;
 
 procedure UpdateToLast(var AError: TSystemError);
 begin
-  //Code(AError, LastSystemErrorCode);
-  //Message(AError, LastSystemErrorMessage);
+  Code(AError, LastSystemErrorCode);
+  Message(AError, LastSystemErrorMessage);
 end;
 
 end.

@@ -5,7 +5,7 @@ unit UNumberHelp;
 interface
 
 uses
-  UNumber,UArray, UException, UExceptionHelp;
+  UNumber, UArray, UException, UExceptionHelp;
 
 type
   TKind = (kUnknownNumber, kBool, kI8, kI16, kI32, kI64, kU8, kU16, kU32, kU64, kU128,

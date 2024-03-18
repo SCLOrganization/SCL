@@ -58,9 +58,9 @@ begin
   Result := ToFilePath(AFile.Path);
 end;
 
-//ofoCreate: Create if it does not exist
-//ofoOverwrite: Used with ofoCreate and creates the file if it exists or not
 function Open(const AFile: TFile; AOptions: TOpenFileOptions; out AHandler: TFileHandler): Bool;
+const
+  CreateOptions = [ofoCreate, ofoOverwrite, ofoOpen];
 var
   dwDesiredAccess, dwCreationDisposition, dwShareMode: DWORD;
 begin
@@ -74,13 +74,18 @@ begin
   if ofoWrite in AOptions then
     dwDesiredAccess := dwDesiredAccess or GENERIC_WRITE;
 
-  if ofoCreate in AOptions then
-    if ofoOverwrite in AOptions then
-      dwCreationDisposition := CREATE_ALWAYS //Create or Truncate
-    else
-      dwCreationDisposition := OPEN_ALWAYS //Create or Open
+  if CreateOptions * AOptions = [ofoCreate] then
+    dwCreationDisposition := CREATE_NEW
+  else if CreateOptions * AOptions = [ofoCreate, ofoOverwrite] then
+    dwCreationDisposition := CREATE_ALWAYS
+  else if CreateOptions * AOptions = [ofoCreate, ofoOpen] then
+    dwCreationDisposition := OPEN_ALWAYS
+  else if CreateOptions * AOptions = [ofoOpen] then
+    dwCreationDisposition := OPEN_EXISTING
+  else if CreateOptions * AOptions = [ofoOverwrite] then
+    dwCreationDisposition := TRUNCATE_EXISTING
   else
-    dwCreationDisposition := OPEN_EXISTING; //Open or Fail
+    dwCreationDisposition := OPEN_EXISTING;
 
   dwShareMode := FILE_SHARE_NONE;
   if ofoShareRead in AOptions then
