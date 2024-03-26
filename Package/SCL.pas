@@ -14,7 +14,7 @@ uses
   UThread, UThreadGroup, UThreadHelp, USystem, USystemCPU, USystemHelp, UTick, UTickHelp, UMemoryBlock, UFileMemoryHandler, 
   UFileCompare, UFileHandleHelp, UMemorySwap, UMemoryHelp, UArraySort, UByteUnit, UByteUnitHelp, UMemoryCompare, 
   UFileMemoryHandlerHelp, USQLite3, USQLite3Help, USQLite3LibraryStatic, UZstandard, UZstandardHelp, 
-  UZstandardLibraryStatic, UFileEnumerateHelp, LazarusPackageIntf;
+  UZstandardLibraryStatic, UFileEnumerateHelp, UxxHash, UxxHashLibraryStatic, LazarusPackageIntf;
 
 implementation
 

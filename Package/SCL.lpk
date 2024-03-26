@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\Source\Number;..\Source\String;..\Source\SharedLibrary\Windows;..\Source\Exception;..\Source\Memory;..\Source\File;..\Source\Program;..\Source\DataStructure\Array;..\Source\DataStructure\List;..\Source\Console;..\Source\Thread;..\Source\System;..\Source\Tick;..\Source\Byte;..\Source\SharedLibrary\SQLite3;..\Source\SharedLibrary\Zstandard;..\Source\SharedLibrary\Posix;..\Source\Segment"/>
+        <OtherUnitFiles Value="..\Source\Number;..\Source\String;..\Source\SharedLibrary\Windows;..\Source\Exception;..\Source\Memory;..\Source\File;..\Source\Program;..\Source\DataStructure\Array;..\Source\DataStructure\List;..\Source\Console;..\Source\Thread;..\Source\System;..\Source\Tick;..\Source\Byte;..\Source\SharedLibrary\SQLite3;..\Source\SharedLibrary\Zstandard;..\Source\SharedLibrary\Posix;..\Source\Segment;..\Source\SharedLibrary\xxHash"/>
         <UnitOutputDirectory Value="Output\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <CodeGeneration>
@@ -253,6 +253,14 @@
       <Item>
         <Filename Value="..\Source\File\UFileEnumerateHelp.pas"/>
         <UnitName Value="UFileEnumerateHelp"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\xxHash\UxxHash.pas"/>
+        <UnitName Value="UxxHash"/>
+      </Item>
+      <Item>
+        <Filename Value="..\Source\SharedLibrary\xxHash\UxxHashLibraryStatic.pas"/>
+        <UnitName Value="UxxHashLibraryStatic"/>
       </Item>
     </Files>
     <RequiredPkgs>
