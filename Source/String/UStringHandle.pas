@@ -12,6 +12,8 @@ procedure Start(const AValue: RStr; out P: PChar; out C, L: NChar); inline; over
 procedure StartFromLast(const AValue: RStr; out P: PChar; out C, L: NChar); inline; overload;
 
 function Next(P: PChar; C, L: NChar; AValue: Char): NChar; inline; overload;
+function Next(P: PChar; C: NChar; AValue: Char): NChar; inline; overload;
+
 function Previous(P: PChar; C, L: NChar; AValue: Char): NChar; inline; overload;
 function Previous(P: PChar; C, L: NChar; AValue1, AValue2: Char): NChar; inline; overload;
 
@@ -49,6 +51,14 @@ function Next(P: PChar; C, L: NChar; AValue: Char): NChar;
 begin
   while (C < L) and (P[C] <> AValue) do
     C += 1;
+  Result := C;
+end;
+
+function Next(P: PChar; C: NChar; AValue: Char): NChar;
+begin
+  repeat
+    C += 1;
+  until P[C] = AValue;
   Result := C;
 end;
 

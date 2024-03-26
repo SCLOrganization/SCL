@@ -88,7 +88,7 @@ var
 begin
   U := SuggestBinaryUnit(AValue, ASystem);
   V := FromByteUnit(U);
-  Divide(AValue, V, Q, R);
+  Divide<UPS>(AValue, V, Q, R);
   Q := AValue div V;
   Result := ToStr(Q);
   R := (R * 10) div V;

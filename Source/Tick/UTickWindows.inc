@@ -11,7 +11,7 @@ end;
 
 function ToMicrosecond(const ATick: TTickCount): TTickMicrosecond;
 begin
-  Result := ATick * 1000000 div QueryPerformanceFrequencyValue;
+  Result := ATick div (QueryPerformanceFrequencyValue div 1000000);
 end;
 
 procedure InitializeUnit;

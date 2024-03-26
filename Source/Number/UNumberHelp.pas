@@ -103,7 +103,7 @@ function Min(A, B, C: I64): I64; inline; overload;
 function Max(A, B, C: I64): I64; inline; overload;
 function Clamp(ANumber, AMin, AMax: I64): I64; inline; overload;
 function DivCeil(A, B: I64): I64; inline; overload;
-procedure Divide(const ADividend, ADivisor: UPS; out AQuotient, ARemainder: UPS); inline; overload;
+procedure Divide<T>(const ADividend, ADivisor: T; out AQuotient, ARemainder: T); inline; overload;
 function Condition<T>(ACondition: Bool; ATrueValue, AFalseValue: T): T; inline; overload;
 
 function Truncate(AValue: FPS): IPS; inline; overload;
@@ -317,7 +317,7 @@ begin
   Result := (A + B - 1) div B;
 end;
 
-procedure Divide(const ADividend, ADivisor: UPS; out AQuotient, ARemainder: UPS);
+procedure Divide<T>(const ADividend, ADivisor: T; out AQuotient, ARemainder: T);
 begin
   AQuotient := ADividend div ADivisor;
   ARemainder := ADividend - (AQuotient * ADivisor);
